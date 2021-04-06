@@ -56,10 +56,12 @@ public class WeatherServlet extends HttpServlet {
 			wBean = new weatherBean(ecodedCityStr);
 			w.getWeather(wBean);
 			if(session.getAttribute("cookieConsent") != null && session.getAttribute("cookieConsent").equals("yes")) {
+				if(wBean.getTemperature() != null) {
 				System.out.println("Skapade ny cookie");
 				Cookie cki = new Cookie("c" + ecodedCityStr, wBean.toString());
 				cki.setMaxAge(60*30);
-				response.addCookie(cki);	
+				response.addCookie(cki);
+				}
 			}
 			
 		}
