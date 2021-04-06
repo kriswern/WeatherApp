@@ -30,9 +30,11 @@ function getCookie() {
 				let cardBody = document.createElement("div");
 				cardBody.classList.add("card-body");
 				
-				let title = document.createElement("h6");
+				let title = document.createElement("a");
 				title.classList.add("card-title");
 				title.append(decodeURI(cookieElements[0].toUpperCase()));
+				title.href = "<%=request.getContextPath()%>" + "/WeatherServlet?city=" + cookieElements[0].toUpperCase();
+				
 				
 				let footer = document.createElement("div");
 				footer.classList.add("card-footer");
