@@ -33,9 +33,10 @@ public class GettheWeather {
 		linec.setDoOutput(true);
 		linec.setRequestMethod("GET");
 
-		System.out.println("error while fetching from api: " + linec.getErrorStream());
+		System.out.println(linec);
 		
-		if(linec.getErrorStream() != null) {
+		try {
+			
 			BufferedReader in = new BufferedReader(new InputStreamReader(linec.getInputStream()));
 
 			String inputLine;
@@ -52,7 +53,10 @@ public class GettheWeather {
 			wBean.setCloudsStr(getStuff(doc, "clouds", "name"));
 			wBean.setTemperatureC(getStuff(doc, "temperature", "value"));
 			wBean.setWind(getStuff(doc, "direction", "name"));	
-		}
+			
+		}catch(Exception e) {e.printStackTrace();}
+
+		
 	}
 
 	private String getStuff(Document doc, String ele, String atr) {
