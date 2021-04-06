@@ -32,8 +32,6 @@ public class GettheWeather {
 		linec.setDoInput(true);
 		linec.setDoOutput(true);
 		linec.setRequestMethod("GET");
-
-		System.out.println(linec);
 		
 		try {
 			
@@ -54,7 +52,12 @@ public class GettheWeather {
 			wBean.setTemperatureC(getStuff(doc, "temperature", "value"));
 			wBean.setWind(getStuff(doc, "direction", "name"));	
 			
-		}catch(Exception e) {e.printStackTrace();}
+		}catch(Exception e) {
+			System.out.println(e);
+			 String[] arrOfStr = e.toString().split("=");
+			 String[] query = arrOfStr[1].split(",");
+			System.out.println("Api cannot find city: " + query[0]);
+			}
 
 		
 	}
