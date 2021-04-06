@@ -64,9 +64,14 @@ public class WeatherServlet extends HttpServlet {
 			
 		}
 
-		request.setAttribute("wBean", wBean);
 		RequestDispatcher rd = request.getRequestDispatcher("Index.jsp");
-		rd.forward(request, response);
+		if(wBean.getTemperature() != null) {
+			request.setAttribute("wBean", wBean);
+			rd.forward(request, response);
+		}else {
+			rd.forward(request, response);
+		}
+
 
 	}
 

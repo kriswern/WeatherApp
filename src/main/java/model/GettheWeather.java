@@ -33,23 +33,26 @@ public class GettheWeather {
 		linec.setDoOutput(true);
 		linec.setRequestMethod("GET");
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(linec.getInputStream()));
+		System.out.println("error while fetching from api: " + linec.getErrorStream());
+		
+		if(linec.getErrorStream() != null) {
+			BufferedReader in = new BufferedReader(new InputStreamReader(linec.getInputStream()));
 
-		String inputLine;
-		String ApiResponse = "";
+			String inputLine;
+			String ApiResponse = "";
+			
+			while ((inputLine = in.readLine()) != null) {
+				ApiResponse += inputLine;
+			}
+			in.close();
 
-		while ((inputLine = in.readLine()) != null) {
-			ApiResponse += inputLine;
+			Document doc = convertStringToXMLDocument(ApiResponse);
+			doc.getDocumentElement().normalize();
+
+			wBean.setCloudsStr(getStuff(doc, "clouds", "name"));
+			wBean.setTemperatureC(getStuff(doc, "temperature", "value"));
+			wBean.setWind(getStuff(doc, "direction", "name"));	
 		}
-		in.close();
-
-		Document doc = convertStringToXMLDocument(ApiResponse);
-		doc.getDocumentElement().normalize();
-
-		wBean.setCloudsStr(getStuff(doc, "clouds", "name"));
-		wBean.setTemperatureC(getStuff(doc, "temperature", "value"));
-		wBean.setWind(getStuff(doc, "direction", "name"));
-
 	}
 
 	private String getStuff(Document doc, String ele, String atr) {
